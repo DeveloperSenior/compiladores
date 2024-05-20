@@ -37,6 +37,9 @@ public class Main {
         );
         Set<String> nfaPrintStates = new HashSet<>();
         nfaStates.forEach(s -> nfaPrintStates.add("[" + s + "]"));
+        Set<String> printStateNfaAcceptStates = new HashSet<>();
+        nfaAcceptStates.forEach(s -> printStateNfaAcceptStates.add("["+s+"]") );
+
 
         System.out.println(transitions);
 
@@ -52,7 +55,7 @@ public class Main {
         }
 
         // Mostrar el NAFD graficamente
-        drawAutomaton("Automata No Deterministico", false, nfaPrintStates, transitions, "[" + nfaStartState + "]", nfaAcceptStates);
+        drawAutomaton("Automata No Deterministico", false, nfaPrintStates, transitions, "[" + nfaStartState + "]", printStateNfaAcceptStates);
 
         // Convertir el AFN a un autómata finito determinista (AFD)
         AutomatonConversionResult conversionResult = convertNFAToDFA(nfaStates, nfaTransitions, nfaStartState, nfaAcceptStates);
