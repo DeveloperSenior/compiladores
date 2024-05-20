@@ -13,6 +13,8 @@ public class Main {
     public static final String ERROR_STATE = "[Error]";
     public static final String INIT_AUTOMATON = "[INICIO]";
 
+    static boolean isNotNfa = true;
+
     public static void main(String[] args) {
         // Definir el autómata no determinista (AFN)
         InputAutomaton input = initAutomaton();
@@ -35,6 +37,20 @@ public class Main {
         );
         Set<String> nfaPrintStates = new HashSet<>();
         nfaStates.forEach(s -> nfaPrintStates.add("[" + s + "]"));
+
+        System.out.println(transitions);
+
+        /**
+         * Valida si el automata es no determinista, a partir de las transiciones
+         * a multiples estados desde un mismo estado
+         */
+        transitions.forEach((stringCharacterPair, strings) -> isNotNfa = isNotNfa && strings.size() == 1);
+
+        if(isNotNfa){
+            JOptionPane.showMessageDialog(null,"El automata ingresado, no es un (AFND)");
+            System.exit(0);
+        }
+
         // Mostrar el NAFD graficamente
         drawAutomaton("Automata No Deterministico", false, nfaPrintStates, transitions, "[" + nfaStartState + "]", nfaAcceptStates);
 
@@ -170,6 +186,7 @@ public class Main {
                 }
             }
         }
+        System.out.println("Cierre epsilon: "+ states+" cierre: " +closure);
 
         return closure;
     }
